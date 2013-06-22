@@ -1,0 +1,57 @@
+extends layout
+
+block content
+    #heading.blockdiv
+        h1 ToDo List for #{title}
+        p#subheading
+            |Happy #{title}
+        #inputzone
+            form(action="")(method="post")#inputform
+                input(name="text")(type="text")(placeholder="What to do?")#inputedit
+                input(type="submit")(value="✎")#inputsubmit
+    #mainsheet.blockdiv
+        #sheet
+            ul#multicolomnlist
+                each todo in todos
+                    li(id="li"+todo.id)
+                        table.innertable
+                            tbody.innertbody
+                                tr.innertr
+                                    td.itemcheck
+                                        .itemnumber #{todo.id}
+                                        .checkdiv
+                                            if todo.done
+                                                input(id="done"+todo.id)(type="checkbox")(checked).tickcheck
+                                            else
+                                                input(id="done"+todo.id)(type="checkbox").tickcheck
+                                            label(for="done"+todo.id).donelabel
+                                    td.itemcontent
+                                        if todo.done
+                                            label(id="todotext"+todo.id)(for="done"+todo.id).donetext #{todo.data}
+                                        else
+                                            label(id="todotext"+todo.id)(for="done"+todo.id) #{todo.data}
+                                    td.itemdelete
+                                        .itemtime
+                                            if todo.date
+                                                - var da = todo.date;
+                                                - var pad = function(n){return n<10 ? '0' + n : n};
+                                                //- var da = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+                                                |#{da.getFullYear()}-#{pad(da.getMonth() + 1)}-#{pad(da.getDate())} #{pad(da.getHours())}:#{pad(da.getMinutes())}:#{pad(da.getSeconds())}
+                                        button(id="delete"+todo.id).delete X
+    #templatepart
+        //li#templateli(style="display:none")
+        li#templateli(style="display:none")
+            table.innertable
+                tbody.innertbody
+                    tr.innertr
+                        td.itemcheck
+                            .itemnumber 0
+                            .checkdiv
+                                input(id="done", type="checkbox").tickcheck
+                                label(for="done").donelabel
+                        td.itemcontent
+                            label(id="todotext", for="done") 0
+                        td.itemdelete
+                            .itemtime
+                            button(id="delete").delete X
+
