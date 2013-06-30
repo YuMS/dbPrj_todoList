@@ -1,14 +1,20 @@
 {
   "name": "application-name",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node server"
   },
   "dependencies": {
     "express": "3.1.0",
+    "connect-flash": "0.1.x",
     "jade": "*",
     "mysql": "2.0.0-alpha7",
+    "passport": "0.1.16",
+    "passport-local": "0.1.6",
+    "connect-mysql": "0.2.5",
+    "cuid": "1.1.7",
+    "async": "0.2.6",
     "date-utils": "1.2.12"
   },
   "engines": {

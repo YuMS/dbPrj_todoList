@@ -2,9 +2,14 @@ extends layout
 
 block content
     #heading.blockdiv
-        h1 ToDo List for #{title}
-        p#subheading
-            |Happy #{title}
+        -if (!user)
+            h1 ToDo List for public
+            p#subheading
+                |Happy Everyone
+        -else
+            h1 ToDo List for #{user.name}
+            p#subheading
+                |Happy #{user.name}
         #inputzone
             form(action="")(method="post")#inputform
                 input(name="text")(type="text")(placeholder="What to do?")#inputedit

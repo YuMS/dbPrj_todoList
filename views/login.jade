@@ -1,0 +1,44 @@
+doctype 5
+html
+    head
+        title ProbMario
+        link(rel='stylesheet', href="/stylesheets/login.css")
+        link(rel='stylesheet', href="/stylesheets/bootstrap.min.css")
+        link(rel='stylesheet', href="/stylesheets/layout.css")
+        script(data-main='/js/login.js', src='/js/require-jquery.js')
+    body#login
+        div#login-panel.panel
+            #login-wrapper
+                div#login-top
+                    h1 登录
+                div.line-sep
+                div#login-content
+                    - if (status)
+                        - if (status == '3')
+                            p.text-success 创建用户成功，请登录
+                        - else if (status == '1')
+                            p.text-error 密码错误
+                        - else if (status == '2')
+                            p.text-error 用户不存在
+                        - else if (status == '4')
+                            p.text-info 请先登录
+                    form.form-horizontal(action="/login", method="post")
+                        div.control-group
+                            label#login-label.control-label 用户名
+                            div#login-control.controls
+                                input#username(type="text", placeholder="用户名", name="username")
+                        div.control-group
+                            label#login-label.control-label 密码
+                            div#login-control.controls
+                                input#password(type="password", name="password", placeholder="密码")
+                        div.control-group
+                            div.controls
+                                button#login-btn.btn.btn-primary(type="submit", value="登录") 登录
+                                div
+                                    a(href='/register') 没有帐号？
+                div.line-sep
+                footer.footer(style = "margin-top: 60px;")
+                    div.container(style = "width: auto;")
+                        p ©&nbsp;2013&nbsp;dbPrj_todoList
+                        p
+                            a(href="http://yumaoshu.com", target="_blank") @yumaoshu&nbsp;

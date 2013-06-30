@@ -1,0 +1,16 @@
+extends layout
+block content
+    div.container
+        div.panel
+            h1 囧...
+            div.line-sep
+            br
+            -if (message)
+                h3 出错了， #{message} 。
+            -else
+                h3 出现了莫名其妙的错误。
+            br
+            h4 你可以&nbsp;&nbsp;
+                a(href="/") 回到首页
+                and &nbsp;|&nbsp;
+                a(href="http://zhoutall.com", target="_blank") 联系zhoutall 

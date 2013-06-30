@@ -1,8 +1,85 @@
 doctype 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    script(data-main='../js/main.js', src='../js/require-jquery.js')
-  body
-    block content
+    head
+        link(rel='stylesheet', href="/stylesheets/bootstrap.min.css")
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/layout.css')
+        script(data-main='../js/main.js', src='../js/require-jquery.js')
+        style.
+            html,
+            body {
+                height: 100%;
+                /* The html and body elements cannot have any padding or margin. */
+            }
+        
+            /* Wrapper for page content to push down footer */
+            #wrap {
+                min-height: 95%;
+                height: auto !important;
+                height: 95%;
+                /* Negative indent footer by it's height */
+                margin: 0 auto -81px;
+            }
+        
+            /* Set the fixed height of the footer here */
+            #push,
+            #footer {
+                margin-top: 20px;
+                height: 60px;
+                text-align: center;
+            }
+        
+            /* Lastly, apply responsive CSS fixes as necessary */
+            @media (max-width: 767px) {
+                #footer {
+                margin-left: -20px;
+                margin-right: -20px;
+                padding-left: 20px;
+                padding-right: 20px;
+                }
+            }
+
+        title todoList
+
+    body
+        div#wrap
+            div.navbar.navbar-fixed-top
+                div.navbar-inner
+                    div.navbar-container
+                        button(type="button", data-toggle="collapse", data-target=".nav-collapse").btn.btn-navbar
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        div.nav-collapse.collapse
+                            -if (!user)
+                                ul.nav
+                                    li
+                                        a(href="/", style="font-size: 20px;") todoList
+                                ul.nav
+                                    li
+                                        a(href="/login") 登录
+                                    li
+                                        a(href="/register") 注册
+                            -else
+                                ul.nav
+                                    li
+                                        a(href="/", style="font-size: 20px;") ProbMario
+                                ul.nav
+                                    li
+                                        a(href="/profile") #{user.name} 的主页
+                                ul.nav
+                                    //- li
+                                    //-     a(href="/test") Test
+                                ul.nav#log-out
+                                    li
+                                        a(href="/logout") 注销
+            div.header-padding
+                block content
+            div#push
+        div#footer
+            div.container
+                .line-sep
+                p © 2013 dbPrj_todoList
+                    and
+                    a(href="http://yumaoshu.com", target="_blank") @yumaoshu&nbsp;
+                p &nbsp;

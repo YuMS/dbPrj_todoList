@@ -1,0 +1,45 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #f9faf7;
+    font-family: "Microsoft Yahei","微软雅黑",Tahoma,Arial,Helvetica;
+    height:100%;
+}
+
+.panel{
+    margin-left: 0;
+    height: 100%;
+    -webkit-border-radius: 1px;
+    -webkit-box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
+    box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
+    border-radius: 1px;
+    padding: 30px 30px 30px 30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #F5F5F5;
+}
+
+.white-panel{
+    background-color: #fff;
+}
+
+.line-sep{
+    height: 1px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    position: relative;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    background: #fff;
+    padding: 0 20px;
+}
+
+.header-padding {
+    padding-top: 42px;
+}
+
+.navbar-container {
+    padding-left: 20px;
+    padding-right: 20px;
+}

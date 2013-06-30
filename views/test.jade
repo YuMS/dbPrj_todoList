@@ -1,0 +1,50 @@
+extends layout
+block content
+    div.container
+        p #{JSON.stringify(user)}
+        //-console.log('user', user)
+        //-console.log('project', projects)
+        //-console.log('memo', memos)
+        //-console.log('summary', summaries)
+        -var length
+        -if (projects)
+            -length = projects.length
+        -else
+            -lenght = 0
+        -console.log('length', length)
+        -for (var i = 0; i < length; i++)
+            -var project = projects[i];
+            -var memo = memos[i];
+            -var summary = summaries[i];
+            li
+                -if (projects)
+                    h2 #{project.pid}.#{project.uid}.#{project.pname}.#{project.ctime}.#{project.privacy}
+                    form(action="/project/?" + "action=update" + "&pid=" + project.pid, method="post")
+                        -if (project.privacy)
+                            input(type="checkbox", name="privacy", checked)
+                        -else
+                            input(type="checkbox", name="privacy")
+                        label private
+                        input(type="edit", name="projectname")
+                        input(type="submit", value="update project")
+                    h3 memos:
+                    each oneMemo in memo
+                        if (oneMemo)
+                            p #{oneMemo.mid}.#{oneMemo.data}.#{oneMemo.time}
+                            form(action="/memo/?" + "action=update" + "&pid=" + project.pid + "&mid=" + oneMemo.mid, method="post")
+                                input(type="edit", name="memodata")
+                                input(type="submit", value="update memo")
+                    form(action="/memo/?" + "action=create" + "&pid=" + project.pid, method="post")
+                        input(type="edit", name="memodata")
+                        input(type="submit", value="create new memo")
+                    h3 summary:
+                    if (summary)
+                        p #{summary.data}.#{summary.viewed}.#{summary.modified}
+                        form(action="/summary/?" + "action=update" + "&pid=" + project.pid, method="post")
+                            input(type="edit", name="summarydata")
+                            input(type="submit", value="update summary")
+                    form(action="/summary/?" + "action=create" + "&pid=" + project.pid, method="post")
+                        input(type="submit", value="create new summary")
+        form(action="/project/?" + "action=create", method="post")
+            input(type="edit", name="projectname")
+            input(type="submit", value="create new project")

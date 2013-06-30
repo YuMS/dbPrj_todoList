@@ -1,0 +1,46 @@
+doctype 5
+html
+    head
+        title ProbMario
+        link(rel='stylesheet', href="/stylesheets/register.css")
+        link(rel='stylesheet', href="/stylesheets/bootstrap.min.css")
+        link(rel='stylesheet', href="/stylesheets/layout.css")
+        script(data-main='/js/register.js', src='/js/require-jquery.js')
+    body#register
+        div#register-panel.panel
+            #register-wrapper
+                div#register-top
+                    h1 帐号注册
+                div.line-sep
+                div#register-content
+                    - if (status)
+                        - if (status == '1')
+                            p.text-error 该用户名已存在
+                        - else if (status == '2')
+                            p.text-error 创建用户失败
+                    form.form-horizontal(action="/register", method="post")
+                        div.control-group
+                            label#register-label.control-label 用户名
+                            div#register-control.controls
+                                input#name(type="text", name="name", placeholder="用户名")
+                        div.control-group
+                            label#register-label.control-label 密码
+                            div#register-control.controls
+                                input#password(type="password", name="password", placeholder="密码")
+                        div.control-group
+                            label#register-label.control-label 确认密码
+                            div#register-control.controls
+                                input#password2(type="password", name="password2", placeholder="确认密码")
+                        div.control-group
+                            label#register-label.control-label 常用邮箱
+                            div#register-control.controls
+                                input#email(type="text", name="email", placeholder="常用邮箱")
+                        div.control-group
+                            div.controls
+                                button#confirm-btn.btn.btn-primary(type="submit", value="立即注册") 立即注册
+                div.line-sep
+                footer.footer(style = "margin-top: 60px;")
+                    div.container(style = "width: auto;")
+                        p ©&nbsp;2013&nbsp;dbPrj_todoList
+                        p
+                            a(href="http://yumaoshu.com", target="_blank") @yumaoshu&nbsp;
