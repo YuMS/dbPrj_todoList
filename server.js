@@ -13,8 +13,8 @@ var express = require('express')
     , flash = require('connect-flash')
     , validator = require('validator')
     , LocalStrategy = require('passport-local').Strategy
-    , accountMgr = require('./models/accountMgrLocal')
-    // , accountMgr = require('./models/accountMgrMySQL')
+    // , accountMgr = require('./models/accountMgrLocal')
+    , accountMgr = require('./models/accountMgrMySQL')
     , settings = require('./settings')
     , ceh = require('./models/commonErrHandler');
 
@@ -73,6 +73,7 @@ app.configure(function() {
     // app.use(express.bodyParser());
     app.use(express.limit('5mb'));
     app.use(express.methodOverride());
+    app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.session({ secret: 'secccret'}));
 });
 
@@ -85,13 +86,12 @@ app.configure(function() {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(app.router);
-    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 
-// app.post('/', postindex.postindex);
-app.get('/', routes.index);
-// app.get('/', function() {});
+app.get('/', routes.index.get);
+// app.post('/', routes.index.post);
+app.post('/todo', routes.todo.post);
 
 app.get('/login', routes.login.get);
 app.post('/login',

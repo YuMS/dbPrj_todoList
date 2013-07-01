@@ -54,7 +54,6 @@ var accountMgr = {
             name: name,
             password: password,
             email: email,
-            inproject: -1
         };
         var connection = db.getConnection();
         connection.query('INSERT INTO ' + settings.USERTABLE + ' SET ?', newUser, function(err, result) {

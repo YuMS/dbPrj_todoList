@@ -1,15 +1,27 @@
 extends layout
 
 block content
+    link(rel='stylesheet', href="/stylesheets/index.css")
+    script(data-main='../js/main.js', src='../js/require-jquery.js')
     #heading.blockdiv
         -if (!user)
-            h1 ToDo List for public
+            h1 ToDoList
             p#subheading
-                |Happy Everyone
+                |Group: &nbsp;
+                select.span3#groupselect
+                    option
+                        |public
         -else
             h1 ToDo List for #{user.name}
             p#subheading
-                |Happy #{user.name}
+                |Group: &nbsp;
+                select.span3#groupselect
+                    option
+                        |YuMS' s own
+                    option
+                        |Group 1
+                    option
+                        |public
         #inputzone
             form(action="")(method="post")#inputform
                 input(name="text")(type="text")(placeholder="What to do?")#inputedit
@@ -18,23 +30,23 @@ block content
         #sheet
             ul#multicolomnlist
                 each todo in todos
-                    li(id="li"+todo.id)
+                    li(id="li"+todo.tid)
                         table.innertable
                             tbody.innertbody
                                 tr.innertr
                                     td.itemcheck
-                                        .itemnumber #{todo.id}
+                                        .itemnumber #{todo.tid}
                                         .checkdiv
                                             if todo.done
-                                                input(id="done"+todo.id)(type="checkbox")(checked).tickcheck
+                                                input(id="done"+todo.tid)(type="checkbox")(checked).tickcheck
                                             else
-                                                input(id="done"+todo.id)(type="checkbox").tickcheck
-                                            label(for="done"+todo.id).donelabel
+                                                input(id="done"+todo.tid)(type="checkbox").tickcheck
+                                            label(for="done"+todo.tid).donelabel
                                     td.itemcontent
                                         if todo.done
-                                            label(id="todotext"+todo.id)(for="done"+todo.id).donetext #{todo.data}
+                                            label(id="todotext"+todo.tid)(for="done"+todo.tid).donetext #{todo.data}
                                         else
-                                            label(id="todotext"+todo.id)(for="done"+todo.id) #{todo.data}
+                                            label(id="todotext"+todo.tid)(for="done"+todo.tid) #{todo.data}
                                     td.itemdelete
                                         .itemtime
                                             if todo.date
@@ -42,7 +54,7 @@ block content
                                                 - var pad = function(n){return n<10 ? '0' + n : n};
                                                 //- var da = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
                                                 |#{da.getFullYear()}-#{pad(da.getMonth() + 1)}-#{pad(da.getDate())} #{pad(da.getHours())}:#{pad(da.getMinutes())}:#{pad(da.getSeconds())}
-                                        button(id="delete"+todo.id).delete X
+                                        button(id="delete"+todo.tid).delete X
     #templatepart
         //li#templateli(style="display:none")
         li#templateli(style="display:none")

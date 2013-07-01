@@ -1,37 +1,107 @@
 var 
     validator = require('validator')
-  , accountMgr = require('../models/accountMgrLocal')
-  , ceh = require('../models/commonErrHandler');
+  // , accountMgr = require('../models/accountMgrLocal')
+  , accountMgr = require('../models/accountMgrMySQL')
+  , ceh = require('../models/commonErrHandler')
+  , db = require('../models/db')
+  , dbconsts = require('../models/dbconsts');
 /*
  * GET home page.
  */
 
-exports.index = function(req, res) {
-    var db = require('../models/db');
-    var dbconsts = require('../models/dbconsts');
-    require('date-utils')
-    db.query(dbconsts.list(), function(err, rows, fields) {
-        if (err) console.log('Fetch from database failed.');
-//        for (row in rows) {
-//            var d = rows[row];
-//            if (d.date) {
-//                da = d.date;
-//                d.date = new Date(Date.UTC(da.getFullYear(), da.getMonth(), da.getDate(), da.getHours(), da.getMinutes(), da.getSeconds()));
-//                d.date = d.date.toFormat('YYYY-MM-DD HH24:MI:SS');
-//            }
-//        }
-        res.render('index', { user: req.user, todos: rows});
-    });
+exports.index = {
+    get: function(req, res) {
+        var connection = db.getConnection();
+        require('date-utils')
+        connection.query(dbconsts.list(), function(err, rows, fields) {
+            if (err) console.log('Fetch from database failed.');
+    //        for (row in rows) {
+    //            var d = rows[row];
+    //            if (d.date) {
+    //                da = d.date;
+    //                d.date = new Date(Date.UTC(da.getFullYear(), da.getMonth(), da.getDate(), da.getHours(), da.getMinutes(), da.getSeconds()));
+    //                d.date = d.date.toFormat('YYYY-MM-DD HH24:MI:SS');
+    //            }
+    //        }
+            res.render('index', { user: req.user, todos: rows});
+        });
+    },
+    post: function(req, res) {
+        res.redirect('/');
+    }
+};
+
+exports.todo = {
+    get: function(req, res) {
+        res.redirect('/');
+    },
+    post: function(req, res) {
+        console.log(req.body.valueOf());
+        var db = require('../models/db');
+        var dbconsts = require('../models/dbconsts');
+        var connection = db.getConnection();
+        switch (req.body.type) {
+            case 'toggle': {
+                if (req.body.status == 'true') {
+                    connection.query(dbconsts.toggleoff(req.body.id), function(err, rows, fields) {
+                        if (err) {
+                            console.log("Toggle off in database failed");
+                            return;
+                        }
+                        if (rows) {
+    //                    console.log(rows.valueOf());
+                            res.send(rows.valueOf());
+                        }
+                    });
+                } else {
+                    connection.query(dbconsts.toggleon(req.body.id), function(err, rows, fields) {
+                        if (err) {
+                            console.log("Toggle on in database failed");
+                            return;
+                        }
+                        if (rows) {
+    //                    console.log(rows.valueOf());
+                            res.send(rows.valueOf());
+                        }
+                    });
+                }
+                break;
+            }
+            case 'delete': {
+                connection.query(dbconsts.del(req.body.id), function (err, rows, fields) {
+                    if (err) {
+                        console.log("Fetch from database failed");
+                        return;
+                    }
+                    console.log(rows.valueOf());
+                    res.send(rows.affectedRows + "");
+                });
+                break;
+            }
+            case 'new': {
+                connection.query(dbconsts.insert(req.body.text), function (err, rows, fields) {
+                    if (err) {
+                        console.log("Insert into database failed");
+                        return;
+                    }
+                    console.log(rows.valueOf());
+    //                alert('new!');
+                    res.send(rows.insertId + "");
+                });
+                break;
+            }
+        }
+    }
 };
 
 exports.login = {
     get: function(req, res) {
         if(req.user)
-            return res.redirect('/profile');
+            return res.redirect('/');
         res.render('login', { user: req.user, status: req.flash('error') });
     },
     post: function(req, res) {
-        res.redirect('/profile');
+        res.redirect('/');
     }
 };
 
