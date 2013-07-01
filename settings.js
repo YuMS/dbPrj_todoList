@@ -12,8 +12,8 @@ module.exports = {
     MYSQL_USER: 'dbprj_todolist',
     MYSQL_PASS: '',
     DATABASE: 'dbprj_todolist',
-    TABLE: 'todo',
     USERTABLE: 'user',
+    TODOTABLE: 'todo',
 }
 // module.exports = {
 //     HOST: 'localhost',

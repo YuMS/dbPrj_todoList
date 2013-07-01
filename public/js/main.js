@@ -13,7 +13,7 @@ requirejs.config({
     }
 });
 
-require(['jquery', 'app/posttoggle', 'app/postdelete', 'app/postnew', 'app/date_util'], function($, posttoggle, postdelete, postnew, date_util) {
+require(['jquery', 'app/posttoggle', 'app/postdelete', 'app/postinsert', 'app/date_util'], function($, posttoggle, postdelete, postinsert, date_util) {
     $(document).ready(function() {
         $('.tickcheck').on('click', function(){
             posttoggle(this.id.substr(4), !$(this).prop('checked'));
@@ -27,7 +27,7 @@ require(['jquery', 'app/posttoggle', 'app/postdelete', 'app/postnew', 'app/date_
         });
         $('#inputform').on('submit', function() {
 //            alert('submit');
-            postnew($('#inputedit').val());
+            postinsert($('#inputedit').val());
             return false;
         });
         $('.itemtime').each(function() {

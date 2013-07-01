@@ -4,17 +4,18 @@ block content
     link(rel='stylesheet', href="/stylesheets/index.css")
     script(data-main='../js/main.js', src='../js/require-jquery.js')
     #heading.blockdiv
+        h1 todoList
         -if (!user)
-            h1 ToDoList
-            p#subheading
-                |Group: &nbsp;
+            #subheading
+                |anonymous@
+                |group&nbsp;
                 select.span3#groupselect
                     option
                         |public
         -else
-            h1 ToDo List for #{user.name}
-            p#subheading
-                |Group: &nbsp;
+            #subheading
+                |#{user.name}@
+                |group&nbsp;
                 select.span3#groupselect
                     option
                         |YuMS' s own
@@ -47,13 +48,16 @@ block content
                                             label(id="todotext"+todo.tid)(for="done"+todo.tid).donetext #{todo.data}
                                         else
                                             label(id="todotext"+todo.tid)(for="done"+todo.tid) #{todo.data}
-                                    td.itemdelete
+                                    td.iteminfo
+                                        .itemauthor
+                                            |hehe@
                                         .itemtime
                                             if todo.date
                                                 - var da = todo.date;
                                                 - var pad = function(n){return n<10 ? '0' + n : n};
                                                 //- var da = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
                                                 |#{da.getFullYear()}-#{pad(da.getMonth() + 1)}-#{pad(da.getDate())} #{pad(da.getHours())}:#{pad(da.getMinutes())}:#{pad(da.getSeconds())}
+                                    td.itemdelete
                                         button(id="delete"+todo.tid).delete X
     #templatepart
         //li#templateli(style="display:none")
@@ -68,7 +72,9 @@ block content
                                 label(for="done").donelabel
                         td.itemcontent
                             label(id="todotext", for="done") 0
-                        td.itemdelete
+                        td.iteminfo
+                            .itemauthor
                             .itemtime
+                        td.itemdelete
                             button(id="delete").delete X
 

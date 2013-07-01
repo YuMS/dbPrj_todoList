@@ -8,7 +8,16 @@ var db = require('./db');
 var settings = require('../settings');
 //var esc = connection.escape;
 
-var accountMgr = {
+var defaultCallback = function(callback) {
+    return function(err, rows) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, rows);
+        }
+    }
+}
+var dbMgr = {
     findUserByUid: function(uid, callback) {
         console.log('findUserByUid');
         var connection = db.getConnection();
@@ -63,6 +72,56 @@ var accountMgr = {
                 callback(null, result.insertId);
             }
         });
+    },
+
+    toggleOnTodo: function(tid, callback) {
+        console.log('togglingOnTodo');
+        var q = 'UPDATE ' + settings.TODOTABLE + ' SET `done`=\'1\' WHERE `tid`= ?';
+        var connection = db.getConnection();
+        connection.query(q, [tid], defaultCallback(callback));
+    },
+
+    toggleOffTodo: function(tid, callback) {
+        console.log('togglingOffTodo');
+        var q = 'UPDATE ' + settings.TODOTABLE + ' SET `done`=\'1\' WHERE `tid`= ?';
+        var connection = db.getConnection();
+        connection.query(q, [tid], defaultCallback(callback));
+    },
+
+    deleteTodo: function(tid, callback) {
+        console.log('deleteTodo');
+        var q = 'DELETE FROM ' + settings.TODOTABLE + ' WHERE `tid` = ?';
+        var connection = db.getConnection();
+        connection.query(q, [tid], defaultCallback(callback));
+    },
+
+    insertTodo: function(data, user, callback) {
+        console.log('insertTodo');
+        var d = new Date();
+        if (user == undefined) {
+            user = 404;
+        } else {
+            user = user.uid || 404;
+        }
+        d = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds());
+        var newTodo = {
+            data: data,
+            date: d.toFormat('YYYY-MM-DD HH24:MI:SS'),
+            uid: user,
+            done: 0,
+        };
+        var q = 'INSERT INTO ' + settings.TODOTABLE + ' SET ?';
+        console.log(newTodo.valueOf());
+        console.log(q);
+        var connection = db.getConnection();
+        connection.query(q, newTodo, defaultCallback(callback));
+    },
+
+    listTodo: function(callback) {
+        console.log('listTodo');
+        var q = 'SELECT * from ' + settings.TODOTABLE + ' order by tid desc';
+        var connection = db.getConnection();
+        connection.query(q, defaultCallback(callback));
     },
 
     //TODO: check this!! Havn' t been used!
@@ -336,4 +395,4 @@ var accountMgr = {
     }
 };
 
-module.exports = accountMgr;
+module.exports = dbMgr;

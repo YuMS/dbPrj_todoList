@@ -32,23 +32,23 @@
 #subheading {
     text-align: center;
     font-size: 25pt;
-    margin-left: 20%;
+    margin-left: 40%;
     color: #AAAAAA;
 }
-div #groupselect {
-    text-align: center;
-}
+
 #groupselect {
     /*color: transparent;*/
     background: transparent;
-    border-color: transparent;
-    border-bottom-color: #AAAAAA;
+    border-style: dashed;
+    border-color: #777777;
+    border-width: 1px;
+    /*border-bottom-color: #AAAAAA;*/
     -webkit-appearance: none;
     height: 46px;
     line-height: 46px;
     font-size: 15pt;
-    color: #FFFFFF;
-    /*direction: rtl;*/
+    color: #AAAAAA;
+    direction: rtl;
     text-align: center;
     align: center;
     /*vertical-align: center;*/
@@ -58,6 +58,7 @@ div #groupselect {
     text-align: center;
     align: center;
     color: #000000;
+    font-size: 15pt;
 }
 
 #inputzone {
@@ -285,20 +286,36 @@ div #groupselect {
     display: none;
 }
 
+.iteminfo {
+    text-align: right;
+    width: 15%;
+}
 .itemtime {
     font-size: 8pt;
     color: gray;
     /*padding-top: 15pt;*/
     vertical-align: bottom;
     /*display: inline;*/
-    /*float: right;*/
+    float: left;
     padding: 0;
-    width: 150px;
+    /*width: 150px;*/
+    text-align: left;
+}
+
+.itemauthor {
+    font-size: 8pt;
+    color: gray;
+    /*padding-top: 15pt;*/
+    vertical-align: bottom;
+    /*display: inline;*/
+    float: left;
+    padding: 0;
+    /*width: 150px;*/
 }
 
 .itemdelete {
     text-align: right;
-    width: 15%;
+    width: 5%;
 }
 
 .delete {
@@ -306,7 +323,7 @@ div #groupselect {
     height: 60px;;
     border: 2px double #fcd160;
     background: #fceea6;
-    color: rgba(255, 0, 0, 0.3);
+    color: rgba(255, 0, 0, 0.1);
     font-size: 35pt;
     cursor: pointer;
     text-align: center;

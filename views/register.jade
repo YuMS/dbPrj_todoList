@@ -1,7 +1,7 @@
 doctype 5
 html
     head
-        title ProbMario
+        title todoList
         link(rel='stylesheet', href="/stylesheets/register.css")
         link(rel='stylesheet', href="/stylesheets/bootstrap.min.css")
         link(rel='stylesheet', href="/stylesheets/layout.css")
@@ -10,34 +10,34 @@ html
         div#register-panel.panel
             #register-wrapper
                 div#register-top
-                    h1 帐号注册
+                    h1 Sign Up
                 div.line-sep
                 div#register-content
                     - if (status)
                         - if (status == '1')
-                            p.text-error 该用户名已存在
+                            p.text-error Name already taken
                         - else if (status == '2')
-                            p.text-error 创建用户失败
+                            p.text-error Sign up failed, please try again later.
                     form.form-horizontal(action="/register", method="post")
                         div.control-group
-                            label#register-label.control-label 用户名
+                            label#register-label.control-label Account name
                             div#register-control.controls
-                                input#name(type="text", name="name", placeholder="用户名")
+                                input#name(type="text", name="name")
                         div.control-group
-                            label#register-label.control-label 密码
+                            label#register-label.control-label Password
                             div#register-control.controls
-                                input#password(type="password", name="password", placeholder="密码")
+                                input#password(type="password", name="password")
                         div.control-group
-                            label#register-label.control-label 确认密码
+                            label#register-label.control-label Confirm password
                             div#register-control.controls
-                                input#password2(type="password", name="password2", placeholder="确认密码")
+                                input#password2(type="password", name="password2")
                         div.control-group
-                            label#register-label.control-label 常用邮箱
+                            label#register-label.control-label Email
                             div#register-control.controls
-                                input#email(type="text", name="email", placeholder="常用邮箱")
+                                input#email(type="text", name="email")
                         div.control-group
                             div.controls
-                                button#confirm-btn.btn.btn-primary(type="submit", value="立即注册") 立即注册
+                                button#confirm-btn.btn.btn-primary(type="submit", value="Sign Up!") Sign Up!
                 div.line-sep
                 footer.footer(style = "margin-top: 60px;")
                     div.container(style = "width: auto;")

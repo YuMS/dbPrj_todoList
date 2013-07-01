@@ -9,7 +9,7 @@
 define(['jquery', 'app/posttoggle', 'app/postdelete', 'app/date_util'], function($, posttoggle, postdelete, date_util) {
     return function(text) {
         var data = {
-            type: 'new',
+            type: 'insert',
             text: text
         }
         $.ajax( {

@@ -34,7 +34,7 @@ var summaries = [
     , {pid: 4, data: 'What` s in it?', viewed: 5, modified: 10}
 ];
 
-var accountMgr = {
+var dbMgr = {
     findUserByUid: function(id, fn) {
         console.log('findUserByUid');
         var idx = id - 1;
@@ -331,4 +331,4 @@ var accountMgr = {
     }
 };
 
-module.exports = accountMgr;
+module.exports = dbMgr;

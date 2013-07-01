@@ -1,7 +1,7 @@
 var 
     validator = require('validator')
-  // , accountMgr = require('../models/accountMgrLocal')
-  , accountMgr = require('../models/accountMgrMySQL')
+  // , dbMgr = require('../models/dbMgrLocal')
+  , dbMgr = require('../models/dbMgrMySQL')
   , ceh = require('../models/commonErrHandler')
   , db = require('../models/db')
   , dbconsts = require('../models/dbconsts');
@@ -13,7 +13,7 @@ exports.index = {
     get: function(req, res) {
         var connection = db.getConnection();
         require('date-utils')
-        connection.query(dbconsts.list(), function(err, rows, fields) {
+        dbMgr.listTodo(function(err, rows, fields) {
             if (err) console.log('Fetch from database failed.');
     //        for (row in rows) {
     //            var d = rows[row];
@@ -43,32 +43,32 @@ exports.todo = {
         switch (req.body.type) {
             case 'toggle': {
                 if (req.body.status == 'true') {
-                    connection.query(dbconsts.toggleoff(req.body.id), function(err, rows, fields) {
+                    dbMgr.toggleOffTodo(req.body.id, function(err, rows) {
                         if (err) {
                             console.log("Toggle off in database failed");
                             return;
                         }
                         if (rows) {
-    //                    console.log(rows.valueOf());
-                            res.send(rows.valueOf());
+                            //console.log(rows.valueOf());
+                            res.send(rows.valueOf() + "");
                         }
                     });
                 } else {
-                    connection.query(dbconsts.toggleon(req.body.id), function(err, rows, fields) {
+                    dbMgr.toggleOnTodo(req.body.id, function(err, rows) {
                         if (err) {
                             console.log("Toggle on in database failed");
                             return;
                         }
                         if (rows) {
-    //                    console.log(rows.valueOf());
-                            res.send(rows.valueOf());
+                            //console.log(rows.valueOf());
+                            res.send(rows.valueOf() + "");
                         }
                     });
                 }
                 break;
             }
             case 'delete': {
-                connection.query(dbconsts.del(req.body.id), function (err, rows, fields) {
+                dbMgr.deleteTodo(req.body.id, function(err, rows) {
                     if (err) {
                         console.log("Fetch from database failed");
                         return;
@@ -78,8 +78,8 @@ exports.todo = {
                 });
                 break;
             }
-            case 'new': {
-                connection.query(dbconsts.insert(req.body.text), function (err, rows, fields) {
+            case 'insert': {
+                dbMgr.insertTodo(req.body.text, req.body.user, function(err, rows) {
                     if (err) {
                         console.log("Insert into database failed");
                         return;
@@ -122,11 +122,11 @@ exports.register = {
             return res.render('register', {status: '2'});  //创建用户失败
         }
 
-        accountMgr.findUserByName(name, function(err, user) {
+        dbMgr.findUserByName(name, function(err, user) {
             if (!err) { 
                 return res.render('register', {status: '1'}); //用户名已存在
             }
-            accountMgr.createUser(name, password, email, function(err, uid) {
+            dbMgr.createUser(name, password, email, function(err, uid) {
                 if (ceh(req, res, err, {status: '2'}, 'register'))  return '?'; //创建用户失败
                 return res.render('login', {status: '3'}); //创建用户成功
             });

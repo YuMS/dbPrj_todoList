@@ -22,22 +22,22 @@ html
                                         a(href="/", style="font-size: 20px;") todoList
                                 ul.nav
                                     li
-                                        a(href="/login") 登录
+                                        a(href="/login") login
                                     li
-                                        a(href="/register") 注册
+                                        a(href="/register") register
                             -else
                                 ul.nav
                                     li
-                                        a(href="/", style="font-size: 20px;") ProbMario
+                                        a(href="/", style="font-size: 20px;") todoList
                                 ul.nav
                                     li
-                                        a(href="/") #{user.name} 的list
+                                        a(href="/") #{user.name}' s own list
                                 ul.nav
                                     //- li
                                     //-     a(href="/test") Test
                                 ul.nav#log-out
                                     li
-                                        a(href="/logout") 注销
+                                        a(href="/logout") logout
             div.header-padding
                 block content
             div#push

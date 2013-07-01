@@ -13,8 +13,8 @@ var express = require('express')
     , flash = require('connect-flash')
     , validator = require('validator')
     , LocalStrategy = require('passport-local').Strategy
-    // , accountMgr = require('./models/accountMgrLocal')
-    , accountMgr = require('./models/accountMgrMySQL')
+    // , dbMgr = require('./models/dbMgrLocal')
+    , dbMgr = require('./models/dbMgrMySQL')
     , settings = require('./settings')
     , ceh = require('./models/commonErrHandler');
 
@@ -32,7 +32,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    accountMgr.findUserByUid(id, function (err, user) {
+    dbMgr.findUserByUid(id, function (err, user) {
         done(err, user);
     });
 });
@@ -50,7 +50,7 @@ passport.use(new LocalStrategy(
             // username, or the password is not correct, set the user to `false` to
             // indicate failure and set a flash message.    Otherwise, return the
             // authenticated `user`.
-            accountMgr.findUserByName(name, function(err, user) {
+            dbMgr.findUserByName(name, function(err, user) {
                 if (err) { return done(null, false, { message: err }); } //用户不存在
                 // if (!user) { return done(null, false, { message: 'Unknown user ' + name }); }
                 if (user.password != password) { return done(null, false, { message: '1' }); } //密码错误
