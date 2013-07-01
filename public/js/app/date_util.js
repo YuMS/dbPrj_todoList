@@ -1,10 +1,8 @@
 /**
- * Created with JetBrains WebStorm.
- * User: YuMS
- * Date: 13-2-27
- * Time: 下午11:36
- * To change this template use File | Settings | File Templates.
+ * Author: YuMS
  */
+
+
 define(['exports'], function(exports){
     pad = function(n){return n<10 ? '0' + n : n},
     exports.toMySQLDate = function(d) {

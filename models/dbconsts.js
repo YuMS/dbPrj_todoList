@@ -1,9 +1,5 @@
 /**
- * Created with JetBrains WebStorm.
- * User: YuMS
- * Date: 13-2-26
- * Time: 下午9:24
- * To change this template use File | Settings | File Templates.
+ * Author: YuMS
  */
 
 var settings = require('../settings');

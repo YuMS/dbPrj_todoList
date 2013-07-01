@@ -1,3 +1,7 @@
+/**
+ * Author: zhoutall
+ */
+
 requirejs.config({
     baseUrl: "../js/lib",
     paths: {
@@ -28,11 +32,11 @@ function($, bootstrap){
             var submitok=true;
             if($("#username").val()==""){
                 submitok=false;
-                $("#username").attr("placeholder", "帐号未输入");
+                $("#username").attr("placeholder", "Account name here");
             }
             if($("#password").val()==""){
                 submitok=false;
-                $("#password").attr("placeholder", "密码未输入");
+                $("#password").attr("placeholder", "Password here");
             }
             if(!submitok){
                 return false;

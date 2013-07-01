@@ -1,3 +1,7 @@
+/**
+ * Author: zhoutall
+ */
+
 var 
     validator = require('validator')
   // , dbMgr = require('../models/dbMgrLocal')

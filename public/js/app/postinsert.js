@@ -1,9 +1,5 @@
 /**
- * Created with JetBrains WebStorm.
- * User: YuMS
- * Date: 13-2-27
- * Time: 下午6:00
- * To change this template use File | Settings | File Templates.
+ * Author: YuMS
  */
 
 define(['jquery', 'app/posttoggle', 'app/postdelete', 'app/date_util'], function($, posttoggle, postdelete, date_util) {

@@ -1,3 +1,7 @@
+/**
+ * Author: YuMS
+ */
+
 var settings = require('../settings');
 var mysql = require('mysql');
 

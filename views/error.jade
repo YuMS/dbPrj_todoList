@@ -2,15 +2,13 @@ extends layout
 block content
     div.container
         div.panel
-            h1 囧...
+            h1 Orz...
             div.line-sep
             br
             -if (message)
-                h3 出错了， #{message} 。
+                h3 Something goes wrong: #{message}.
             -else
-                h3 出现了莫名其妙的错误。
+                h3 Something goes wrong.
             br
-            h4 你可以&nbsp;&nbsp;
-                a(href="/") 回到首页
-                and &nbsp;|&nbsp;
-                a(href="http://zhoutall.com", target="_blank") 联系zhoutall 
+            h4 You can &nbsp;&nbsp;
+                a(href="/") go back to todoList

@@ -1,7 +1,5 @@
 /**
  * Author: YuMS
- * Date: 13-3-29
- * Time: 8:32
  */
 
 module.exports = function(req, res, err, transfer, url) {

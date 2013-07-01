@@ -1,9 +1,5 @@
 /**
- * Created with JetBrains WebStorm.
- * User: YuMS
- * Date: 13-2-27
- * Time: 下午1:24
- * To change this template use File | Settings | File Templates.
+ * Author: YuMS
  */
 
 define(['jquery'], function($) {

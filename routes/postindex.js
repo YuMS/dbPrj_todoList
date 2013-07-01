@@ -1,9 +1,5 @@
 /**
- * Created with JetBrains WebStorm.
- * User: YuMS
- * Date: 13-2-24
- * Time: 下午11:01
- * To change this template use File | Settings | File Templates.
+ * Author: YuMS
  */
 
 exports.postindex = function(req, res){

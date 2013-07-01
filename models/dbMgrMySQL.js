@@ -1,7 +1,5 @@
 /**
  * Author: YuMS
- * Date: 13-3-6
- * Time: 2:48
  */
 
 var db = require('./db');
