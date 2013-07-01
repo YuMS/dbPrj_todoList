@@ -9,10 +9,9 @@ var settings = require('../settings');
 var defaultCallback = function(callback) {
     return function(err, rows) {
         if (err) {
-            callback(err);
-        } else {
-            callback(null, rows);
+            return callback(err);
         }
+        callback(null, rows);
     }
 }
 var dbMgr = {
@@ -22,14 +21,14 @@ var dbMgr = {
         connection.query('SELECT * FROM ' + settings.USERTABLE + ' WHERE UID = ? LIMIT 1', [uid], function(err, rows) {
             if (err) {
                 console.log('Query in user table failed.')
+                return callback(err);
+            }
+            if (rows[0]) {
+                // console.log(rows[0].valueOf());
+                callback(null, rows[0]);
             } else {
-                if (rows[0]) {
-//                    console.log(rows[0].valueOf());
-                    callback(null, rows[0]);
-                } else {
-//                    console.log('id not exist');
-                    callback(new Error('User ' + id + ' does not exist'));
-                }
+                // console.log('id not exist');
+                callback(new Error('User ' + id + ' does not exist'));
             }
         });
     },
@@ -40,14 +39,14 @@ var dbMgr = {
         connection.query('SELECT * FROM ' + settings.USERTABLE + ' WHERE NAME = ? LIMIT 1', [name], function(err, rows) {
             if (err) {
                 console.log('Query in user table failed.')
+                return callback(err);
+            }
+            if (rows[0]) {
+                // console.log(rows[0].valueOf());
+                callback(null, rows[0]);
             } else {
-                if (rows[0]) {
-//                    console.log(rows[0].valueOf());
-                    callback(null, rows[0]);
-                } else {
-//                    console.log('User ' + name + ' not exist');
-                    callback('2');
-                }
+                // console.log('User ' + name + ' not exist');
+                callback('2');
             }
         });
     },
@@ -65,10 +64,9 @@ var dbMgr = {
         var connection = db.getConnection();
         connection.query('INSERT INTO ' + settings.USERTABLE + ' SET ?', newUser, function(err, result) {
             if (err) {
-                callback(err);
-            } else {
-                callback(null, result.insertId);
+                return callback(err);
             }
+            callback(null, result.insertId);
         });
     },
 
@@ -97,9 +95,9 @@ var dbMgr = {
         console.log('insertTodo');
         var d = new Date();
         if (user == undefined) {
-            user = 404;
+            user = 0;
         } else {
-            user = user.uid || 404;
+            user = user.uid || 0;
         }
         d = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds());
         var newTodo = {
@@ -109,17 +107,39 @@ var dbMgr = {
             done: 0,
         };
         var q = 'INSERT INTO ' + settings.TODOTABLE + ' SET ?';
-        console.log(newTodo.valueOf());
-        console.log(q);
+        // console.log(newTodo.valueOf());
+        // console.log(q);
         var connection = db.getConnection();
         connection.query(q, newTodo, defaultCallback(callback));
     },
 
-    listTodo: function(callback) {
+    listTodo: function(gid, uid, callback) {
         console.log('listTodo');
-        var q = 'SELECT * from ' + settings.TODOTABLE + ' order by tid desc';
+        if (gid == undefined || uid == undefined) {
+            return callback(new Error('lack of parameters'));
+        }
         var connection = db.getConnection();
-        connection.query(q, defaultCallback(callback));
+        var q = 'SELECT gid FROM ' + settings.USERINGROUPTABLE + ' WHERE uid = ' + connection.escape(uid) + ' AND gid = ' + connection.escape(gid);
+        connection.query(q, function(err, rows) {
+            if (err) {
+                return callback(err);
+            }
+            //TODO: hardcoded 0 to be public group, bad in flexibility
+            if (!rows.length && gid != 0) {
+                return callback(new Error('you have no permission to this group'));
+            }
+            var q = 'SELECT ' + settings.TODOTABLE + '.*, name FROM ' + settings.TODOTABLE + ', ' + settings.USERTABLE + ' WHERE todo.uid = user.uid AND todo.gid = ? order by tid desc';
+            var connection = db.getConnection();
+            connection.query(q, [gid], defaultCallback(callback));
+        })
+    },
+
+    findGroupByUid: function(uid, callback) {
+        console.log('findGroupByUid');
+        uid = uid || 0;
+        var q = 'SELECT * FROM ' + settings.GROUPTABLE + ', ' + settings.USERINGROUPTABLE + ' WHERE ' + settings.USERINGROUPTABLE + '.gid = ' + settings.GROUPTABLE + '.gid AND (uid = ? OR privacy=3) order by ' + settings.GROUPTABLE + '.gid asc';
+        var connection = db.getConnection();
+        connection.query(q, [uid], defaultCallback(callback));
     },
 
     //TODO: check this!! Havn' t been used!

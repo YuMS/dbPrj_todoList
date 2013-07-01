@@ -1,0 +1,36 @@
+#signup-panel {
+    margin: 0 0 0 -210px;
+    width: 420px;
+    text-align: center;
+    z-index: 99;
+    position: absolute;
+    top: 0;
+    padding: 50px 50px 50px 50px;
+    left: 50%;
+}
+
+#signup-wrapper {
+    display: none;
+}
+#signup-top{
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+#signup-label{
+    width: 60px;
+    text-align: center;
+}
+
+#signup-control{
+    margin-left: 0;
+}
+
+#signup-btn{
+    margin-bottom: 10px;
+}
+
+#signup-content{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}

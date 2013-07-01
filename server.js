@@ -101,8 +101,8 @@ app.post('/login',
     passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
     routes.login.post);
 
-app.get('/register', routes.register.get);
-app.post('/register', routes.register.post);
+app.get('/signup', routes.signup.get);
+app.post('/signup', routes.signup.post);
 
 app.get('/logout', routes.logout.get);
 

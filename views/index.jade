@@ -4,29 +4,36 @@ block content
     link(rel='stylesheet', href="/stylesheets/index.css")
     script(data-main='../js/main.js', src='../js/require-jquery.js')
     #heading.blockdiv
+        -var username = "anonymous"
+        -if (!user)
+            -username = "anonymous"
         h1 todoList
+        #inputzone
+            form(action="")(method="post")#inputform
+                input(name="text")(type="text")(placeholder="whatToDo?")#inputedit
+                input(type="submit")(value="✎")#inputsubmit
         -if (!user)
             #subheading
                 |anonymous@
                 |group&nbsp;
-                select.span3#groupselect
-                    option
-                        |public
+                select.span2#groupselect
+                    -if (groups)
+                        each group in groups
+                            if (group.gid == gid)
+                                option(value="#{group.gid}", selected) #{group.name}
+                            else
+                                option(value="#{group.gid}") #{group.name}
         -else
             #subheading
                 |#{user.name}@
                 |group&nbsp;
-                select.span3#groupselect
-                    option
-                        |YuMS' s own
-                    option
-                        |Group 1
-                    option
-                        |public
-        #inputzone
-            form(action="")(method="post")#inputform
-                input(name="text")(type="text")(placeholder="What to do?")#inputedit
-                input(type="submit")(value="✎")#inputsubmit
+                select.span2#groupselect
+                    -if (groups)
+                        each group in groups
+                            -if (group.gid == gid)
+                                option(value="#{group.gid}", selected) #{group.name}
+                            -else
+                                option(value="#{group.gid}") #{group.name}
     #mainsheet.blockdiv
         #sheet
             ul#multicolomnlist
@@ -50,7 +57,7 @@ block content
                                             label(id="todotext"+todo.tid)(for="done"+todo.tid) #{todo.data}
                                     td.iteminfo
                                         .itemauthor
-                                            |hehe@
+                                            |#{todo.name}@
                                         .itemtime
                                             if todo.date
                                                 - var da = todo.date;
@@ -74,7 +81,10 @@ block content
                             label(id="todotext", for="done") 0
                         td.iteminfo
                             .itemauthor
+                                -if (!user)
+                                    |anonymous@
+                                -else
+                                    |#{user.name}@
                             .itemtime
                         td.itemdelete
                             button(id="delete").delete X
-

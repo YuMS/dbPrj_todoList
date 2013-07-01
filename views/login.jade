@@ -10,12 +10,12 @@ html
         div#login-panel.panel
             #login-wrapper
                 div#login-top
-                    h1 Log In
+                    h1 logIn
                 div.line-sep
                 div#login-content
                     - if (status)
                         - if (status == '3')
-                            p.text-success Register Succecced
+                            p.text-success Sign up succecced
                         - else if (status == '1')
                             p.text-error Wrong password
                         - else if (status == '2')
@@ -33,12 +33,13 @@ html
                                 input#password(type="password", name="password", placeholder="Password")
                         div.control-group
                             div.controls
-                                button#login-btn.btn.btn-primary(type="submit", value="Log Int") Log In
+                                button#login-btn.btn.btn-primary(type="submit", value="logIn") logIn
                                 div
-                                    a(href='/register') No Account Yet?
+                                    a(href='/signup') noAccountYet?
                 div.line-sep
                 footer.footer(style = "margin-top: 60px;")
                     div.container(style = "width: auto;")
-                        p ©&nbsp;2013&nbsp;dbPrj_todoList
+                        p ©2013&nbsp;dbPrj_todoList
                         p
-                            a(href="http://yumaoshu.com", target="_blank") @yumaoshu&nbsp;
+                            |by&nbsp;
+                            a(href="http://yumaoshu.com", target="_blank") yumaoshu&nbsp;

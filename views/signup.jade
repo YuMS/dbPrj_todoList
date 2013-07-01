@@ -1,0 +1,47 @@
+doctype 5
+html
+    head
+        title todoList
+        link(rel='stylesheet', href="/stylesheets/signup.css")
+        link(rel='stylesheet', href="/stylesheets/bootstrap.min.css")
+        link(rel='stylesheet', href="/stylesheets/layout.css")
+        script(data-main='/js/signup.js', src='/js/require-jquery.js')
+    body#signup
+        div#signup-panel.panel
+            #signup-wrapper
+                div#signup-top
+                    h1 signUp
+                div.line-sep
+                div#signup-content
+                    - if (status)
+                        - if (status == '1')
+                            p.text-error Name already taken
+                        - else if (status == '2')
+                            p.text-error Sign up failed, please try again later.
+                    form.form-horizontal(action="/signup", method="post")
+                        div.control-group
+                            label#signup-label.control-label Account name
+                            div#signup-control.controls
+                                input#name(type="text", name="name")
+                        div.control-group
+                            label#signup-label.control-label Password
+                            div#signup-control.controls
+                                input#password(type="password", name="password")
+                        div.control-group
+                            label#signup-label.control-label Confirm password
+                            div#signup-control.controls
+                                input#password2(type="password", name="password2")
+                        div.control-group
+                            label#signup-label.control-label Email
+                            div#signup-control.controls
+                                input#email(type="text", name="email")
+                        div.control-group
+                            div.controls
+                                button#confirm-btn.btn.btn-primary(type="submit", value="signUp!") signUp!
+                div.line-sep
+                footer.footer(style = "margin-top: 60px;")
+                    div.container(style = "width: auto;")
+                        p ©2013&nbsp;dbPrj_todoList
+                        p
+                            |by&nbsp;
+                            a(href="http://yumaoshu.com", target="_blank") yumaoshu&nbsp;

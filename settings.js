@@ -8,8 +8,12 @@ module.exports = {
     MYSQL_USER: 'dbprj_todolist',
     MYSQL_PASS: '',
     DATABASE: 'dbprj_todolist',
-    USERTABLE: 'user',
-    TODOTABLE: 'todo',
+    ATTACHMENTTABLE: '`attachment`',
+    ATTINTODOTABLE: '`attintodo`',
+    GROUPTABLE: '`group`',
+    TODOTABLE: '`todo`',
+    USERTABLE: '`user`',
+    USERINGROUPTABLE: '`useringroup`',
 }
 // module.exports = {
 //     HOST: 'localhost',

@@ -2,32 +2,43 @@
  * Author: zhoutall
  */
 
-var 
-    validator = require('validator')
+var validator = require('validator')
+  , async = require('async')
   // , dbMgr = require('../models/dbMgrLocal')
   , dbMgr = require('../models/dbMgrMySQL')
   , ceh = require('../models/commonErrHandler')
   , db = require('../models/db')
   , dbconsts = require('../models/dbconsts');
+
 /*
  * GET home page.
  */
 
 exports.index = {
     get: function(req, res) {
-        var connection = db.getConnection();
-        require('date-utils')
-        dbMgr.listTodo(function(err, rows, fields) {
-            if (err) console.log('Fetch from database failed.');
-    //        for (row in rows) {
-    //            var d = rows[row];
-    //            if (d.date) {
-    //                da = d.date;
-    //                d.date = new Date(Date.UTC(da.getFullYear(), da.getMonth(), da.getDate(), da.getHours(), da.getMinutes(), da.getSeconds()));
-    //                d.date = d.date.toFormat('YYYY-MM-DD HH24:MI:SS');
-    //            }
-    //        }
-            res.render('index', { user: req.user, todos: rows});
+        var groups;
+        var uid;
+        var gid = req.query.gid || 0;
+        console.log('gid is', gid);
+        console.log('req.query.gid is', req.query.gid);
+        if (!req.user) {
+            uid = 0;
+        } else {
+            uid = req.user.uid || 0;
+        }
+        dbMgr.findGroupByUid(uid, function(err, rows) {
+            if (err) {
+                console.log('find groups from database failed.');
+                return res.render('error', {user: req.user, message: err});
+            }
+            groups = rows;
+            dbMgr.listTodo(gid, uid, function(err, rows) {
+                if (err) {
+                    console.log('list todos from database failed.');
+                    return res.render('error', {user: req.user, message: err});
+                }
+                res.render('index', { user: req.user, groups: groups, todos: rows, gid: gid});
+            });
         });
     },
     post: function(req, res) {
@@ -49,8 +60,9 @@ exports.todo = {
                 if (req.body.status == 'true') {
                     dbMgr.toggleOffTodo(req.body.id, function(err, rows) {
                         if (err) {
-                            console.log("Toggle off in database failed");
-                            return;
+                            console.log("Toggle off todo in database failed");
+                            console.log(err.valueOf());
+                            return res.render('error', {user: req.user, message: err});
                         }
                         if (rows) {
                             //console.log(rows.valueOf());
@@ -60,8 +72,9 @@ exports.todo = {
                 } else {
                     dbMgr.toggleOnTodo(req.body.id, function(err, rows) {
                         if (err) {
-                            console.log("Toggle on in database failed");
-                            return;
+                            console.log("Toggle on todo in database failed");
+                            console.log(err.valueOf());
+                            return res.render('error', {user: req.user, message: err});
                         }
                         if (rows) {
                             //console.log(rows.valueOf());
@@ -74,8 +87,9 @@ exports.todo = {
             case 'delete': {
                 dbMgr.deleteTodo(req.body.id, function(err, rows) {
                     if (err) {
-                        console.log("Fetch from database failed");
-                        return;
+                        console.log("Delete todo from database failed");
+                        console.log(err.valueOf());
+                        return res.render('error', {user: req.user, message: err});
                     }
                     console.log(rows.valueOf());
                     res.send(rows.affectedRows + "");
@@ -83,12 +97,12 @@ exports.todo = {
                 break;
             }
             case 'insert': {
-                dbMgr.insertTodo(req.body.text, req.body.user, function(err, rows) {
+                dbMgr.insertTodo(req.body.text, req.user, function(err, rows) {
                     if (err) {
-                        console.log("Insert into database failed");
-                        return;
+                        console.log("Insert todo into database failed");
+                        console.log(err.valueOf());
+                        return res.render('error', {user: req.user, message: err});
                     }
-                    console.log(rows.valueOf());
     //                alert('new!');
                     res.send(rows.insertId + "");
                 });
@@ -109,9 +123,9 @@ exports.login = {
     }
 };
 
-exports.register = {
+exports.signup = {
     get: function(req, res) {
-        res.render('register', { user: req.user, status: req.flash('error') });
+        res.render('signup', { user: req.user, status: req.flash('error') });
     },
     post: function(req, res) {
         var name=validator.sanitize(req.param("name")).trim(); //trim
@@ -123,15 +137,15 @@ exports.register = {
             validator.check(name).len(4).is(/^[\w\!\@\#\$\%\&\^\*\+\-\=\.\~\_]+$/);
             validator.check(password).len(6);
         } catch(e){
-            return res.render('register', {status: '2'});  //创建用户失败
+            return res.render('signup', {status: '2'});  //创建用户失败
         }
 
         dbMgr.findUserByName(name, function(err, user) {
             if (!err) { 
-                return res.render('register', {status: '1'}); //用户名已存在
+                return res.render('signup', {status: '1'}); //用户名已存在
             }
             dbMgr.createUser(name, password, email, function(err, uid) {
-                if (ceh(req, res, err, {status: '2'}, 'register'))  return '?'; //创建用户失败
+                if (ceh(req, res, err, {status: '2'}, 'signup'))  return '?'; //创建用户失败
                 return res.render('login', {status: '3'}); //创建用户成功
             });
         });

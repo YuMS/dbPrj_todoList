@@ -31,34 +31,34 @@
 
 #subheading {
     text-align: center;
-    font-size: 25pt;
+    font-size: 15pt;
     margin-left: 40%;
     color: #AAAAAA;
 }
 
 #groupselect {
     /*color: transparent;*/
+    padding: 0;
     background: transparent;
     border-style: dashed;
     border-color: #777777;
     border-width: 1px;
     /*border-bottom-color: #AAAAAA;*/
     -webkit-appearance: none;
-    height: 46px;
-    line-height: 46px;
-    font-size: 15pt;
+    height: 30px;
+    line-height: 30px;
+    font-size: 10pt;
     color: #AAAAAA;
-    direction: rtl;
+    /*direction: rtl;*/
     text-align: center;
     align: center;
     /*vertical-align: center;*/
 }
 
 #groupselect option {
-    text-align: center;
-    align: center;
+    /*text-align: center;*/
     color: #000000;
-    font-size: 15pt;
+    font-size: 10pt;
 }
 
 #inputzone {
@@ -117,7 +117,7 @@
     box-shadow: 3px 3px 3px gray;
 }
 #mainsheet {
-    background: #fafddc;
+    /*background: #fafddc;*/
 }
 #sheet {
     padding-top: 20px;;

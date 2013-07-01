@@ -11,11 +11,14 @@ requirejs.config({
 
 require(['jquery', 'app/posttoggle', 'app/postdelete', 'app/postinsert', 'app/date_util'], function($, posttoggle, postdelete, postinsert, date_util) {
     $(document).ready(function() {
-        $('.tickcheck').on('click', function(){
+        $('#groupselect').on('change', function() {
+            window.location='/?gid=' + $('#groupselect option:selected').val();
+        });
+        $('.tickcheck').on('click', function() {
             posttoggle(this.id.substr(4), !$(this).prop('checked'));
 //            $('#todotext' + this.id.substr(4)).toggleClass('donetext');
         });
-        $('.delete').on('click', function(){
+        $('.delete').on('click', function() {
             if (confirm('Don\' t delete your history unless you didn\' t mean to create it. Sure?')) {
                 postdelete(this.id.substr(6));
             };
