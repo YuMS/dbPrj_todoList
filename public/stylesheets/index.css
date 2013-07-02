@@ -29,11 +29,16 @@
     color: #FFFFFF;
 }
 
-#subheading {
+#groupinfo {
     text-align: center;
     font-size: 15pt;
     margin-left: 40%;
     color: #AAAAAA;
+}
+
+#groupinfo a {
+    font-size: 10pt;
+    /*color: #FFFFFF;*/
 }
 
 #groupselect {

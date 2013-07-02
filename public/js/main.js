@@ -26,7 +26,7 @@ require(['jquery', 'app/posttoggle', 'app/postdelete', 'app/postinsert', 'app/da
         });
         $('#inputform').on('submit', function() {
 //            alert('submit');
-            postinsert($('#inputedit').val());
+            postinsert($('#inputedit').val(), $('#groupselect option:selected').val());
             return false;
         });
         $('.itemtime').each(function() {

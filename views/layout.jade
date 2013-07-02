@@ -31,19 +31,19 @@ html
                                         a(href="/", style="font-size: 20px;") todoList
                                 ul.nav
                                     li
-                                        a(href="/") #{user.name}' s own list
+                                        a(href="/") publicList
                                 ul.nav
                                     //- li
                                     //-     a(href="/test") Test
                                 ul.nav#log-out
                                     li
-                                        a(href="/logout") logout
+                                        a(href="/logout") logout(#{user.name})
             div.header-padding
                 block content
             div#push
         div#footer
             div.container
-                .line-sep
+                p
                 p ©2013 dbPrj_todoList
                 p
                     |by&nbsp;

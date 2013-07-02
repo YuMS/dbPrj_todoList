@@ -91,7 +91,7 @@ var dbMgr = {
         connection.query(q, [tid], defaultCallback(callback));
     },
 
-    insertTodo: function(data, user, callback) {
+    insertTodo: function(body, user, callback) {
         console.log('insertTodo');
         var d = new Date();
         if (user == undefined) {
@@ -101,9 +101,10 @@ var dbMgr = {
         }
         d = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds());
         var newTodo = {
-            data: data,
+            data: body.text || "",
             date: d.toFormat('YYYY-MM-DD HH24:MI:SS'),
             uid: user,
+            gid: body.gid || 0,
             done: 0,
         };
         var q = 'INSERT INTO ' + settings.TODOTABLE + ' SET ?';

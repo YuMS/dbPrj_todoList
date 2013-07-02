@@ -3,10 +3,11 @@
  */
 
 define(['jquery', 'app/posttoggle', 'app/postdelete', 'app/date_util'], function($, posttoggle, postdelete, date_util) {
-    return function(text) {
+    return function(text, gid) {
         var data = {
             type: 'insert',
-            text: text
+            text: text,
+            gid: gid || 0
         }
         $.ajax( {
             type: 'POST',

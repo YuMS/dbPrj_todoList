@@ -19,8 +19,6 @@ exports.index = {
         var groups;
         var uid;
         var gid = req.query.gid || 0;
-        console.log('gid is', gid);
-        console.log('req.query.gid is', req.query.gid);
         if (!req.user) {
             uid = 0;
         } else {
@@ -97,7 +95,7 @@ exports.todo = {
                 break;
             }
             case 'insert': {
-                dbMgr.insertTodo(req.body.text, req.user, function(err, rows) {
+                dbMgr.insertTodo(req.body, req.user, function(err, rows) {
                     if (err) {
                         console.log("Insert todo into database failed");
                         console.log(err.valueOf());

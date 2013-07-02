@@ -13,9 +13,8 @@ block content
                 input(name="text")(type="text")(placeholder="whatToDo?")#inputedit
                 input(type="submit")(value="✎")#inputsubmit
         -if (!user)
-            #subheading
+            #groupinfo
                 |anonymous@
-                |group&nbsp;
                 select.span2#groupselect
                     -if (groups)
                         each group in groups
@@ -24,9 +23,8 @@ block content
                             else
                                 option(value="#{group.gid}") #{group.name}
         -else
-            #subheading
+            #groupinfo
                 |#{user.name}@
-                |group&nbsp;
                 select.span2#groupselect
                     -if (groups)
                         each group in groups
@@ -34,6 +32,7 @@ block content
                                 option(value="#{group.gid}", selected) #{group.name}
                             -else
                                 option(value="#{group.gid}") #{group.name}
+                a(href="/profile") manage
     #mainsheet.blockdiv
         #sheet
             ul#multicolomnlist
